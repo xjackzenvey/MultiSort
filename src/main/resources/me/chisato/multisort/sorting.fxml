@@ -4,14 +4,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.shape.Line?>
+
 
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="me.chisato.multisort.SortController"
           stylesheets="@styles.css"
-          hgap="10" vgap="10">
+          hgap="20" vgap="20"
+          fx:id="rootGridPane"
+          alignment="TOP_CENTER">
     <children>
+
         <!-- 第一行容器 -->
         <VBox fx:id="container1" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="sort-container"/>
         <VBox fx:id="container2" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="sort-container"/>
@@ -23,7 +26,7 @@
         <VBox fx:id="container6" GridPane.rowIndex="1" GridPane.columnIndex="2" styleClass="sort-container"/>
 
         <!-- 开始排序按钮 -->
-        <HBox alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="3">
+        <HBox alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="3" styleClass="StartButton">
             <Button text="开始排序" onAction="#startSorting" />
         </HBox>
     </children>
