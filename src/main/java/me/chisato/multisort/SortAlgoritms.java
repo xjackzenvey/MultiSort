@@ -1,4 +1,9 @@
 package me.chisato.multisort;
+import javafx.application.Platform;
+import javafx.scene.shape.Line;
+import me.chisato.multisort.SortController.*;
+
+import java.util.List;
 
 /*
  * @author Chisato
@@ -13,7 +18,7 @@ public class SortAlgoritms {
         void onSwap(int arr[], int i, int j, String algorithmName);
     }
 
-    private static SwapCallback swapCallback;
+    public static SwapCallback swapCallback;
 
     public static void setSwapCallback(SwapCallback callback) {
         swapCallback = callback;
@@ -31,111 +36,137 @@ public class SortAlgoritms {
 
     }
 
-    public static void bubbleSort(int[] arr, int length) {
-        String AlgorithmName = "BubbleSort";
+    public static void updateUIOnSwap(int[] arr, int i, int j, String algorithmName, int containerIndex, List<List<Line>> linesList) {
+        Platform.runLater(() -> {
+            List<Line> lines = linesList.get(containerIndex);
+            if (i < lines.size() && j < lines.size()) {
+                Line lineI = lines.get(i);
+                Line lineJ = lines.get(j);
+                double lengthI = arr[i] * 10.0;
+                double lengthJ = arr[j] * 10.0;
+                lineI.setEndX(lengthI);
+                lineJ.setEndX(lengthJ);
+            }
+        });
+    }
+
+    public static void bubbleSortWithDelay(int[] arr, String algorithmName, int containerIndex, List<List<Line>> linesList) {
         boolean swapped;
-        for (int i = 0; i < length - 1; i++) {
+        for (int i = 0; i < arr.length - 1; i++) {
             swapped = false;
-            for (int j = 0; j < length - i - 1; j++) {
+            for (int j = 0; j < arr.length - i - 1; j++) {
                 if (arr[j] > arr[j + 1]) {
-                    swap(arr, j, j + 1, AlgorithmName); // 调用 swap 函数交换元素
+                    SortAlgoritms.swap(arr, j, j + 1, algorithmName);
                     swapped = true;
+                    updateUIOnSwap(arr, j, j + 1, algorithmName, containerIndex, linesList);
+                    try {
+                        Thread.sleep(100); // 延迟以允许UI更新
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-            // 如果没有发生交换，说明数组已经有序，提前退出
-            if (!swapped) {
-                break;
-            }
+            if (!swapped) break;
         }
     }
 
-    public static void selectionSort(int[] arr, int length) {
-        String AlgorithmName = "SelectionSort";
-        for (int i = 0; i < length - 1; i++) {
+    public static void selectionSortWithDelay(int[] arr, String algorithmName, int containerIndex, List<List<Line>> linesList) {
+        for (int i = 0; i < arr.length - 1; i++) {
             int minIndex = i;
-            for (int j = i + 1; j < length; j++) {
+            for (int j = i + 1; j < arr.length; j++) {
                 if (arr[j] < arr[minIndex]) {
                     minIndex = j;
                 }
             }
             if (minIndex != i) {
-                swap(arr, i, minIndex, AlgorithmName); // 调用 swap 函数交换元素
+                SortAlgoritms.swap(arr, i, minIndex, algorithmName);
+                updateUIOnSwap(arr, i, minIndex, algorithmName, containerIndex, linesList);
+                try {
+                    Thread.sleep(100); // 延迟以允许UI更新
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
-    public static void insertionSort(int[] arr, int length) {
-        String AlgorithmName = "InsertionSort";
-        for (int i = 1; i < length; i++) {
+    public static void insertionSortWithDelay(int[] arr, String algorithmName, int containerIndex, List<List<Line>> linesList) {
+        for (int i = 1; i < arr.length; i++) {
             int key = arr[i];
             int j = i - 1;
-
-            // 移动比key大的元素到右边一位
             while (j >= 0 && arr[j] > key) {
-                swap(arr, j, j + 1, AlgorithmName); // 使用 swap 函数移动元素
+                SortAlgoritms.swap(arr, j, j + 1, algorithmName);
+                updateUIOnSwap(arr, j, j + 1, algorithmName, containerIndex, linesList);
+                try {
+                    Thread.sleep(100); // 延迟以允许UI更新
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 j--;
             }
-
-            // 插入key到正确位置
             arr[j + 1] = key;
         }
     }
 
-    public static void shellSort(int[] arr, int length) {
-        String AlgorithmName = "ShellSort";
-        int gap = length / 2; // 初始步长，设置为数组长度的一半
-
+    public static void shellSortWithDelay(int[] arr, String algorithmName, int containerIndex, List<List<Line>> linesList) {
+        int gap = arr.length / 2;
         while (gap > 0) {
-            // 对每个步长 gap 的子数组进行插入排序
-            for (int i = gap; i < length; i++) {
+            for (int i = gap; i < arr.length; i++) {
                 int j = i;
-                // 在子数组中进行比较，交换元素
                 while (j >= gap && arr[j - gap] > arr[j]) {
-                    swap(arr, j - gap, j, AlgorithmName); // 使用 swap 函数交换元素
+                    SortAlgoritms.swap(arr, j - gap, j, algorithmName);
+                    updateUIOnSwap(arr, j - gap, j, algorithmName, containerIndex, linesList);
+                    try {
+                        Thread.sleep(100); // 延迟以允许UI更新
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     j -= gap;
                 }
             }
-            gap /= 2; // 缩小步长
+            gap /= 2;
         }
     }
 
-    public static void heapSort(int[] arr, int length) {
-
-        String AlgorithmName = "HeapSort";
-
-        // 构建最大堆
-        for (int i = length / 2 - 1; i >= 0; i--) {
-            heapify(arr, length, i);
+    public static void heapSortWithDelay(int[] arr, String algorithmName, int containerIndex, List<List<Line>> linesList) {
+        for (int i = arr.length / 2 - 1; i >= 0; i--) {
+            heapifyWithDelay(arr, arr.length, i, algorithmName, containerIndex, linesList);
         }
 
-        // 逐个将最大元素移到数组末尾
-        for (int i = length - 1; i > 0; i--) {
-            swap(arr, 0, i, AlgorithmName); // 将当前最大元素（堆顶）移到数组末尾
-            heapify(arr, i, 0); // 重新调整剩余元素为最大堆
+        for (int i = arr.length - 1; i > 0; i--) {
+            SortAlgoritms.swap(arr, 0, i, algorithmName);
+            updateUIOnSwap(arr, 0, i, algorithmName, containerIndex, linesList);
+            try {
+                Thread.sleep(100); // 延迟以允许UI更新
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            heapifyWithDelay(arr, i, 0, algorithmName, containerIndex, linesList);
         }
     }
 
-    // 调整堆结构，使其成为最大堆
-    private static void heapify(int[] arr, int n, int i) {
-        String AlgorithmName = "Heapify";
-        int largest = i; // 初始化最大值为当前节点
-        int left = 2 * i + 1; // 左子节点
-        int right = 2 * i + 2; // 右子节点
+    public static void heapifyWithDelay(int[] arr, int n, int i, String algorithmName, int containerIndex, List<List<Line>> linesList) {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
 
-        // 如果左子节点存在且大于当前最大值，则更新最大值
         if (left < n && arr[left] > arr[largest]) {
             largest = left;
         }
 
-        // 如果右子节点存在且大于当前最大值，则更新最大值
         if (right < n && arr[right] > arr[largest]) {
             largest = right;
         }
 
-        // 如果最大值不是当前节点，则交换并递归调整子树
         if (largest != i) {
-            swap(arr, i, largest, AlgorithmName);
-            heapify(arr, n, largest);
+            SortAlgoritms.swap(arr, i, largest, algorithmName);
+            updateUIOnSwap(arr, i, largest, algorithmName, containerIndex, linesList);
+            try {
+                Thread.sleep(100); // 延迟以允许UI更新
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            heapifyWithDelay(arr, n, largest, algorithmName, containerIndex, linesList);
         }
     }
 }
