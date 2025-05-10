@@ -1,0 +1,10 @@
+.line-container {
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+}
+
+.line {
+    -fx-stroke: #3498db;
+    -fx-stroke-width: 3;
+}
