@@ -2,6 +2,7 @@ package me.chisato.multisort;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
@@ -18,6 +19,19 @@ public class SortController {
 
     @FXML
     private VBox container1, container2, container3, container4, container5, container6;
+
+    // 这是第一个页面传过来用于表式数据分布的
+    @FXML
+    private String dataDistribution;
+
+    // 这是第一个页面表示数据量的
+    private int dataSize;
+
+    // 用于第一个页面的按钮回调
+    public void setData(String dataDistribution, int dataSize) {
+        this.dataDistribution = dataDistribution;
+        this.dataSize = dataSize;
+    }
 
     private List<VBox> containers;
     private List<List<Line>> linesList;
