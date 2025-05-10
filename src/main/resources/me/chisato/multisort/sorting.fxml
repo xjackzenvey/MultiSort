@@ -20,7 +20,7 @@
         <!-- 第二行容器 -->
         <VBox fx:id="container4" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="sort-container"/>
         <VBox fx:id="container5" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="sort-container"/>
-        <VBox fx:id="container6" GridPane.rowIndex="1" GridPane.columnIndex="2" styleClass="sort-container" visible="false"/>
+        <VBox fx:id="container6" GridPane.rowIndex="1" GridPane.columnIndex="2" styleClass="sort-container"/>
 
         <!-- 开始排序按钮 -->
         <HBox alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="3">

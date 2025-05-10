@@ -1,21 +1,18 @@
 package me.chisato.multisort;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static me.chisato.multisort.SortAlgoritms.*;
+import static me.chisato.multisort.SortAlgorithms.*;
 
 public class SortController {
 
@@ -31,6 +28,7 @@ public class SortController {
 
     private int[] staticArray;
     private List<Line> staticLines;
+    private int staticArraySize = 20;
 
     // 盒子编号到算法名称的映射
     private String[] container2Algo = {"BubbleSort", "SelectionSort", "InsertionSort", "ShellSort", "HeapSort", "QuickSort"};
@@ -49,7 +47,7 @@ public class SortController {
 
         linesList = new ArrayList<>();
         arrays = new ArrayList<>();
-        staticArray = generateRandomArray(20, 1, 20);
+        staticArray = generateRandomArray(staticArraySize, 1, 20);
         staticLines = createLines(staticArray);
 
 
@@ -102,6 +100,7 @@ public class SortController {
         executorService.submit(() -> insertionSortWithDelay(arrays.get(2), container2Algo[2], 2, linesList));
         executorService.submit(() -> shellSortWithDelay(arrays.get(3), container2Algo[3], 3, linesList));
         executorService.submit(() -> heapSortWithDelay(arrays.get(4), container2Algo[4], 4, linesList));
+        executorService.submit(() -> quickSortWithDelay(arrays.get(5),0, staticArraySize-1,container2Algo[5], 5, linesList));
 
         executorService.submit(() -> {
             try {

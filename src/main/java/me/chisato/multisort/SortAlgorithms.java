@@ -1,7 +1,6 @@
 package me.chisato.multisort;
 import javafx.application.Platform;
 import javafx.scene.shape.Line;
-import me.chisato.multisort.SortController.*;
 
 import java.util.List;
 
@@ -11,18 +10,15 @@ import java.util.List;
  * @description 排序算法类，不仅需要排序，排序时需要突出Swap，Swap时要通知Javafx前端
  */
 
-public class SortAlgoritms {
+public class SortAlgorithms {
 
     // todo: 定义一个回调接口，用于通知 JavaFX 前端更新 UI
     public interface SwapCallback {
-        void onSwap(int arr[], int i, int j, String algorithmName);
+        void onSwap(int[] arr, int i, int j, String algorithmName);
     }
 
     public static SwapCallback swapCallback;
 
-    public static void setSwapCallback(SwapCallback callback) {
-        swapCallback = callback;
-    }
 
     public static void swap(int arr[], int i, int j, String AlgorithmName) {
         int temp = arr[i];
@@ -56,7 +52,7 @@ public class SortAlgoritms {
             swapped = false;
             for (int j = 0; j < arr.length - i - 1; j++) {
                 if (arr[j] > arr[j + 1]) {
-                    SortAlgoritms.swap(arr, j, j + 1, algorithmName);
+                    SortAlgorithms.swap(arr, j, j + 1, algorithmName);
                     swapped = true;
                     updateUIOnSwap(arr, j, j + 1, algorithmName, containerIndex, linesList);
                     try {
@@ -79,7 +75,7 @@ public class SortAlgoritms {
                 }
             }
             if (minIndex != i) {
-                SortAlgoritms.swap(arr, i, minIndex, algorithmName);
+                swap(arr, i, minIndex, algorithmName);
                 updateUIOnSwap(arr, i, minIndex, algorithmName, containerIndex, linesList);
                 try {
                     Thread.sleep(100); // 延迟以允许UI更新
@@ -95,7 +91,7 @@ public class SortAlgoritms {
             int key = arr[i];
             int j = i - 1;
             while (j >= 0 && arr[j] > key) {
-                SortAlgoritms.swap(arr, j, j + 1, algorithmName);
+                swap(arr, j, j + 1, algorithmName);
                 updateUIOnSwap(arr, j, j + 1, algorithmName, containerIndex, linesList);
                 try {
                     Thread.sleep(100); // 延迟以允许UI更新
@@ -114,7 +110,7 @@ public class SortAlgoritms {
             for (int i = gap; i < arr.length; i++) {
                 int j = i;
                 while (j >= gap && arr[j - gap] > arr[j]) {
-                    SortAlgoritms.swap(arr, j - gap, j, algorithmName);
+                    swap(arr, j - gap, j, algorithmName);
                     updateUIOnSwap(arr, j - gap, j, algorithmName, containerIndex, linesList);
                     try {
                         Thread.sleep(100); // 延迟以允许UI更新
@@ -134,7 +130,7 @@ public class SortAlgoritms {
         }
 
         for (int i = arr.length - 1; i > 0; i--) {
-            SortAlgoritms.swap(arr, 0, i, algorithmName);
+            swap(arr, 0, i, algorithmName);
             updateUIOnSwap(arr, 0, i, algorithmName, containerIndex, linesList);
             try {
                 Thread.sleep(100); // 延迟以允许UI更新
@@ -159,7 +155,7 @@ public class SortAlgoritms {
         }
 
         if (largest != i) {
-            SortAlgoritms.swap(arr, i, largest, algorithmName);
+            swap(arr, i, largest, algorithmName);
             updateUIOnSwap(arr, i, largest, algorithmName, containerIndex, linesList);
             try {
                 Thread.sleep(100); // 延迟以允许UI更新
@@ -168,5 +164,40 @@ public class SortAlgoritms {
             }
             heapifyWithDelay(arr, n, largest, algorithmName, containerIndex, linesList);
         }
+    }
+
+    public static void quickSortWithDelay(int[] arr, int low, int high, String algorithmName, int containerIndex, List<List<Line>> linesList) {
+        if (low < high) {
+            int pi = partition(arr, low, high, algorithmName, containerIndex, linesList);
+            //updateUIOnSwap(arr, low, pi, algorithmName, containerIndex, linesList);
+            try {
+                Thread.sleep(100); // 延迟以允许UI更新
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                e.printStackTrace();
+            }
+            quickSortWithDelay(arr, low, pi - 1, algorithmName, containerIndex, linesList);
+            quickSortWithDelay(arr, pi + 1, high, algorithmName, containerIndex, linesList);
+        }
+    }
+
+    public static int partition(int[] arr, int low, int high, String algorithmName, int containerIndex, List<List<Line>> linesList) {
+        int pivot = arr[high];
+        int i = (low - 1);
+        for (int j = low; j < high; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+                swap(arr, i, j, algorithmName);
+                updateUIOnSwap(arr, i, j, algorithmName, containerIndex, linesList);
+                try {
+                    Thread.sleep(100); // 延迟以允许UI更新
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        swap(arr, i + 1, high, algorithmName);
+        updateUIOnSwap(arr, i + 1, high, algorithmName, containerIndex, linesList);
+        return i + 1;
     }
 }
