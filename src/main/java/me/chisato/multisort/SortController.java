@@ -2,18 +2,16 @@ package me.chisato.multisort;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static me.chisato.multisort.SortAlgorithms.*;
+import static me.chisato.multisort.utils.*;
 
 public class SortController {
 
@@ -38,11 +36,10 @@ public class SortController {
     private ExecutorService executorService;
     private List<int[]> arrays;
 
-    private Random random = new Random();
 
     private int[] staticArray;
     private List<Line> staticLines;
-    private int staticArraySize = 20;
+    private int staticArraySize = this.dataSize;
 
     // 盒子编号到算法名称的映射
     private String[] container2Algo = {"BubbleSort", "SelectionSort", "InsertionSort", "ShellSort", "HeapSort", "QuickSort"};
@@ -61,7 +58,11 @@ public class SortController {
 
         linesList = new ArrayList<>();
         arrays = new ArrayList<>();
-        staticArray = generateRandomArray(staticArraySize, 1, 20);
+
+        // staticArray = generateRandomArray(staticArraySize, 1, 20);
+        // 根据欢迎窗口传入的数据分布生成数组
+        staticArray = handleArray(dataDistribution, dataSize, 1, dataSize);
+
         staticLines = createLines(staticArray);
 
 
@@ -93,14 +94,6 @@ public class SortController {
             lines.add(line);
         }
         return lines;
-    }
-
-    private int[] generateRandomArray(int size, int min, int max) {
-        int[] array = new int[size];
-        for (int i = 0; i < size; i++) {
-            array[i] = min + random.nextInt(max - min + 1);
-        }
-        return array;
     }
 
     @FXML
