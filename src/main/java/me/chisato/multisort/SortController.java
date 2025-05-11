@@ -2,6 +2,7 @@ package me.chisato.multisort;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
@@ -20,24 +21,31 @@ public class SortController {
 
     // 这是第一个页面传过来用于表式数据分布的
     @FXML
-    private String dataDistribution;
+    private final String dataDistribution;
 
     // 这是第一个页面表示数据量的
-    private int dataSize;
+    @FXML
+    private final int dataSize;
 
 
-    private List<VBox> containers;
+    // VBOX容器和容器内的线条
+    private List<VBox>      containers;
     private List<List<Line>> linesList;
+
+    // 开始的按钮
+    @FXML
+    private Button startButton;
+
+    // 线程池
     private ExecutorService executorService;
+
+    // 与数据相关的变量
     private List<int[]> arrays;
-
-
     private int[] staticArray;
-    private List<Line> staticLines;
-    private int staticArraySize;
+    private int   staticArraySize;
 
     // 盒子编号到算法名称的映射
-    private String[] container2Algo = {"BubbleSort", "SelectionSort", "InsertionSort", "ShellSort", "HeapSort", "QuickSort"};
+    private final String[] container2Algo = {"BubbleSort", "SelectionSort", "InsertionSort", "ShellSort", "HeapSort", "QuickSort"};
 
 
     // 重载构造函数接受第一个页面的数据
@@ -68,8 +76,6 @@ public class SortController {
         // 根据欢迎窗口传入的数据分布生成数组
         staticArray = handleArray(dataDistribution, dataSize, 1, dataSize);
 
-        staticLines = createLines(staticArray);
-
 
 
         int vboxNumber = 0;
@@ -90,6 +96,7 @@ public class SortController {
         }
     }
 
+    // 绘制线条的函数
     private List<Line> createLines(int[] arr) {
         List<Line> lines = new ArrayList<>();
         for (int value : arr) {
@@ -103,6 +110,11 @@ public class SortController {
 
     @FXML
     private void startSorting() {
+
+        // 禁用开始排序的按钮
+        // 直接设置为不可见叭
+        startButton.setVisible(false);
+
         if (executorService.isShutdown()) {
             executorService = Executors.newFixedThreadPool(8);
         }
@@ -121,7 +133,8 @@ public class SortController {
                     Thread.sleep(100);
                 }
                 Platform.runLater(() -> {
-                    // 重新启用按钮等操作可以在这里执行
+                    ;
+                    // 不知道执行完要干啥。。。
                 });
             } catch (InterruptedException e) {
                 e.printStackTrace();

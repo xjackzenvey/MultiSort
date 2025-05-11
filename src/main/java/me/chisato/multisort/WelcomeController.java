@@ -29,9 +29,6 @@ public class WelcomeController {
 
         Parent root = loader.load();
 
-        // 获取下一个页面的控制器
-        SortController nextPageController = loader.getController();
-
         Stage stage = new Stage();
         stage.setMaximized(false);
         stage.setMinHeight(800);

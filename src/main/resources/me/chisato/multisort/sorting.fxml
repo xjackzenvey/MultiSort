@@ -27,7 +27,7 @@
 
         <!-- 开始排序按钮 -->
         <HBox alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="3" styleClass="StartButton">
-            <Button text="开始排序" onAction="#startSorting" />
+            <Button text="开始排序" onAction="#startSorting" fx:id="startButton"/>
         </HBox>
     </children>
 </GridPane>

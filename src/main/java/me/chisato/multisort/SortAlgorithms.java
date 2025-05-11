@@ -56,6 +56,8 @@ public class SortAlgorithms {
             }
             if (!swapped) break;
         }
+
+        onCompleteSorting(linesList.get(containerIndex));
     }
 
     public static void selectionSortWithDelay(int[] arr, String algorithmName, int containerIndex, List<List<Line>> linesList) {
@@ -76,6 +78,8 @@ public class SortAlgorithms {
                 }
             }
         }
+
+        onCompleteSorting(linesList.get(containerIndex));
     }
 
     public static void insertionSortWithDelay(int[] arr, String algorithmName, int containerIndex, List<List<Line>> linesList) {
@@ -94,6 +98,8 @@ public class SortAlgorithms {
             }
             arr[j + 1] = key;
         }
+
+        onCompleteSorting(linesList.get(containerIndex));
     }
 
     public static void shellSortWithDelay(int[] arr, String algorithmName, int containerIndex, List<List<Line>> linesList) {
@@ -114,6 +120,8 @@ public class SortAlgorithms {
             }
             gap /= 2;
         }
+
+        onCompleteSorting(linesList.get(containerIndex));
     }
 
     public static void heapSortWithDelay(int[] arr, String algorithmName, int containerIndex, List<List<Line>> linesList) {
@@ -131,6 +139,8 @@ public class SortAlgorithms {
             }
             heapifyWithDelay(arr, i, 0, algorithmName, containerIndex, linesList);
         }
+
+        onCompleteSorting(linesList.get(containerIndex));
     }
 
     public static void heapifyWithDelay(int[] arr, int n, int i, String algorithmName, int containerIndex, List<List<Line>> linesList) {
@@ -172,6 +182,8 @@ public class SortAlgorithms {
             quickSortWithDelay(arr, low, pi - 1, algorithmName, containerIndex, linesList);
             quickSortWithDelay(arr, pi + 1, high, algorithmName, containerIndex, linesList);
         }
+
+        onCompleteSorting(linesList.get(containerIndex));
     }
 
     public static int partition(int[] arr, int low, int high, String algorithmName, int containerIndex, List<List<Line>> linesList) {
@@ -192,5 +204,18 @@ public class SortAlgorithms {
         swap(arr, i + 1, high, algorithmName);
         updateUIOnSwap(arr, i + 1, high, algorithmName, containerIndex, linesList);
         return i + 1;
+
+
+    }
+
+
+    // 排序完成后更改线条的颜色！
+    private static void onCompleteSorting(List<Line> lines) {
+        Platform.runLater(() -> {
+                for (Line line : lines) {
+                    line.setStyle("-fx-stroke: #b0c4d8;"); // 设置线条颜色为绿色
+                }
+            }
+        );
     }
 }
