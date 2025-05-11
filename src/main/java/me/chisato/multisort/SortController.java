@@ -34,7 +34,7 @@ public class SortController {
 
     private int[] staticArray;
     private List<Line> staticLines;
-    private int staticArraySize = this.dataSize;
+    private int staticArraySize;
 
     // 盒子编号到算法名称的映射
     private String[] container2Algo = {"BubbleSort", "SelectionSort", "InsertionSort", "ShellSort", "HeapSort", "QuickSort"};
@@ -61,6 +61,8 @@ public class SortController {
 
         linesList = new ArrayList<>();
         arrays = new ArrayList<>();
+
+        this.staticArraySize = this.dataSize;
 
         // staticArray = generateRandomArray(20, 1, 20);
         // 根据欢迎窗口传入的数据分布生成数组
@@ -110,7 +112,7 @@ public class SortController {
         executorService.submit(() -> insertionSortWithDelay(arrays.get(2), container2Algo[2], 2, linesList));
         executorService.submit(() -> shellSortWithDelay(arrays.get(3), container2Algo[3], 3, linesList));
         executorService.submit(() -> heapSortWithDelay(arrays.get(4), container2Algo[4], 4, linesList));
-        executorService.submit(() -> quickSortWithDelay(arrays.get(5),0, staticArraySize-1,container2Algo[5], 5, linesList));
+        executorService.submit(() -> quickSortWithDelay(arrays.get(5),0, staticArraySize - 1, container2Algo[5], 5, linesList));
 
         executorService.submit(() -> {
             try {

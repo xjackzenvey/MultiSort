@@ -2,6 +2,7 @@ package me.chisato.multisort;
 import javafx.application.Platform;
 import javafx.scene.shape.Line;
 
+import java.util.logging.Logger;
 import java.util.List;
 
 /*
@@ -11,6 +12,8 @@ import java.util.List;
  */
 
 public class SortAlgorithms {
+
+    private static Logger logger = Logger.getLogger(SortAlgorithms.class.getName());
 
     public static void swap(int arr[], int i, int j, String AlgorithmName) {
         int temp = arr[i];
@@ -35,6 +38,7 @@ public class SortAlgorithms {
     }
 
     public static void bubbleSortWithDelay(int[] arr, String algorithmName, int containerIndex, List<List<Line>> linesList) {
+
         boolean swapped;
         for (int i = 0; i < arr.length - 1; i++) {
             swapped = false;
@@ -155,6 +159,7 @@ public class SortAlgorithms {
     }
 
     public static void quickSortWithDelay(int[] arr, int low, int high, String algorithmName, int containerIndex, List<List<Line>> linesList) {
+
         if (low < high) {
             int pi = partition(arr, low, high, algorithmName, containerIndex, linesList);
             // updateUIOnSwap(arr, low, pi, algorithmName, containerIndex, linesList);

@@ -1,14 +1,12 @@
 .sort-container {
     -fx-padding: 30px;
     -fx-background-color: #f0f0f0;
-    -fx-border: 1 solid #ccc;
     -fx-opacity: 0.8;
 }
 
 .line {
     -fx-stroke: #93c5a4;
     -fx-stroke-width: 6;
-    -fx-border: 3 solid #2c3e50;
 }
 
 .AlgoNameLable {
