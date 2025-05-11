@@ -1,8 +1,6 @@
 package me.chisato.multisort;
 import javafx.application.Platform;
 import javafx.scene.shape.Line;
-
-import java.util.logging.Logger;
 import java.util.List;
 
 /*
@@ -13,9 +11,8 @@ import java.util.List;
 
 public class SortAlgorithms {
 
-    private static Logger logger = Logger.getLogger(SortAlgorithms.class.getName());
 
-    public static void swap(int arr[], int i, int j, String AlgorithmName) {
+    public static void swap(int[] arr, int i, int j, String AlgorithmName) {
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
@@ -183,7 +180,10 @@ public class SortAlgorithms {
             quickSortWithDelay(arr, pi + 1, high, algorithmName, containerIndex, linesList);
         }
 
-        onCompleteSorting(linesList.get(containerIndex));
+        // 对快排的结束要特殊判断
+        if (low == 0 && high == arr.length - 1) {
+            onCompleteSorting(linesList.get(containerIndex));
+        }
     }
 
     public static int partition(int[] arr, int low, int high, String algorithmName, int containerIndex, List<List<Line>> linesList) {

@@ -36,7 +36,7 @@ public class WelcomeController {
         stage.setMaxWidth(1400);
         stage.setMaxHeight(800);
         stage.setScene(new Scene(root));
-        stage.setTitle("数据处理页面");
+        stage.setTitle("排序页面");
         stage.show();
     }
 }

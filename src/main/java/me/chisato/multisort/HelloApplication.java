@@ -15,7 +15,7 @@ public class HelloApplication extends Application {
         stage.setMaximized(false);
         stage.setMaxHeight(320);
         stage.setMaxWidth(600);
-        stage.setTitle("Hello!");
+        stage.setTitle("起始页！");
         stage.setScene(scene);
         stage.show();
     }
