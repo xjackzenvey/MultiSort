@@ -23,11 +23,14 @@ public class WelcomeController {
         int dataSize = dataSizeComboBox.getValue();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sorting.fxml"));
+
+        // 传递数据！
+        loader.setControllerFactory(c -> new SortController(distribution, dataSize));
+
         Parent root = loader.load();
 
-        // 获取下一个页面的控制器并传递数据
+        // 获取下一个页面的控制器
         SortController nextPageController = loader.getController();
-        nextPageController.setData(distribution, dataSize);
 
         Stage stage = new Stage();
         stage.setMaximized(false);

@@ -12,23 +12,11 @@ import java.util.List;
 
 public class SortAlgorithms {
 
-    // todo: 定义一个回调接口，用于通知 JavaFX 前端更新 UI
-    public interface SwapCallback {
-        void onSwap(int[] arr, int i, int j, String algorithmName);
-    }
-
-    public static SwapCallback swapCallback;
-
-
     public static void swap(int arr[], int i, int j, String AlgorithmName) {
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
 
-        // todo: 添加代码来通知 JavaFX 前端进行 UI 更新
-        if (swapCallback != null) {
-            swapCallback.onSwap(arr, i, j, AlgorithmName);
-        }
 
     }
 
@@ -169,7 +157,7 @@ public class SortAlgorithms {
     public static void quickSortWithDelay(int[] arr, int low, int high, String algorithmName, int containerIndex, List<List<Line>> linesList) {
         if (low < high) {
             int pi = partition(arr, low, high, algorithmName, containerIndex, linesList);
-            //updateUIOnSwap(arr, low, pi, algorithmName, containerIndex, linesList);
+            // updateUIOnSwap(arr, low, pi, algorithmName, containerIndex, linesList);
             try {
                 Thread.sleep(100); // 延迟以允许UI更新
             } catch (InterruptedException e) {

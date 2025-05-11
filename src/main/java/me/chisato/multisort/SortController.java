@@ -25,11 +25,6 @@ public class SortController {
     // 这是第一个页面表示数据量的
     private int dataSize;
 
-    // 用于第一个页面的按钮回调
-    public void setData(String dataDistribution, int dataSize) {
-        this.dataDistribution = dataDistribution;
-        this.dataSize = dataSize;
-    }
 
     private List<VBox> containers;
     private List<List<Line>> linesList;
@@ -44,9 +39,17 @@ public class SortController {
     // 盒子编号到算法名称的映射
     private String[] container2Algo = {"BubbleSort", "SelectionSort", "InsertionSort", "ShellSort", "HeapSort", "QuickSort"};
 
+
+    // 重载构造函数接受第一个页面的数据
+    public SortController(String dataDistribution, int dataSize) {
+        this.dataDistribution = dataDistribution;
+        this.dataSize = dataSize;
+    }
+
     @FXML
     private void initialize() {
-        executorService = Executors.newFixedThreadPool(6);
+
+        executorService = Executors.newFixedThreadPool(8);
 
         containers = new ArrayList<>();
         containers.add(container1);
@@ -59,7 +62,7 @@ public class SortController {
         linesList = new ArrayList<>();
         arrays = new ArrayList<>();
 
-        // staticArray = generateRandomArray(staticArraySize, 1, 20);
+        // staticArray = generateRandomArray(20, 1, 20);
         // 根据欢迎窗口传入的数据分布生成数组
         staticArray = handleArray(dataDistribution, dataSize, 1, dataSize);
 
@@ -99,7 +102,7 @@ public class SortController {
     @FXML
     private void startSorting() {
         if (executorService.isShutdown()) {
-            executorService = Executors.newFixedThreadPool(6);
+            executorService = Executors.newFixedThreadPool(8);
         }
 
         executorService.submit(() -> bubbleSortWithDelay(arrays.get(0), container2Algo[0], 0, linesList));
