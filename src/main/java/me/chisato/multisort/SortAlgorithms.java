@@ -213,7 +213,8 @@ public class SortAlgorithms {
     private static void onCompleteSorting(List<Line> lines) {
         Platform.runLater(() -> {
                 for (Line line : lines) {
-                    line.setStyle("-fx-stroke: #b0c4d8;"); // 设置线条颜色为绿色
+                    line.getStyleClass().removeAll("line");
+                    line.getStyleClass().add("sorted-line");
                 }
             }
         );
